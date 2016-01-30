@@ -84,6 +84,8 @@ We will engrave in our hearts the past, when Japan ended up becoming a challenge
 Heading toward the 80th, the 90th and the centennial anniversary of the end of the war, we are determined to create such a Japan together with the Japanese people.
 
       </textarea>
+      <button id="analyze">Analyze</button><br>
+      <textarea id="result"></textarea>
 
       <!-- vehicle api 必須 : ここから-->
       <script src="http://52.193.125.145:3000/socket.io/socket.io.js"></script> 
@@ -112,32 +114,26 @@ Heading toward the 80th, the 90th and the centennial anniversary of the end of t
         });
       </script>
       <script>
-        /* watson config */
-        var watson = {
-            "credentials": {
-                "url": "https://gateway.watsonplatform.net/personality-insights/api",
-                "username": "c03ee0e7-eebf-469e-8e5f-06559cac835e",
-                "password": "75IKpGqKF19V"
-            }
-        };
-        var content = $('textarea#text').val();
-        var options = {
-            "type": "POST",
-            "dataType": 'json',
-            "url": watson.credentials.url,
-            beforeSend: function(xhr) {
-                var credentials = $.base64.encode(watson.credentials.username +  ":" + watson.credentials.password);
-                xhr.setRequestHeader("Authorization", "Basic " + credentials);
-            },
-            "data": {
-                "text": content
-            }
-        };
-        $.ajax(options).done(function(data) {
-            console.log(data);
-        }).fail(function(err) {
-            console.error(err);
-        })
+        $('button#analyze').click(function() {
+            /* watson config */
+            var url = 'http://localhost:10010/personality/insights';
+            var content = $('textarea#text').val();
+            var options = {
+                "type": "POST",
+                "dataType": 'json',
+                "url": url,
+                "data": {
+                    "text": content
+                }
+            };
+            $.ajax(options).done(function(data) {
+                console.log(data);
+                $('textarea#result').val(JSON.stringify(data));
+            }).fail(function(err) {
+                console.error(err);
+                $('textarea#result').val(JSON.stringify(err));
+            });
+        });
       </script>
     </body>
 </html>
