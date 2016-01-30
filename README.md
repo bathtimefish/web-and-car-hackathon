@@ -1,2 +1,1 @@
-# web-and-car-hackathon
-Webとクルマのハッカソン作業用
+# Skeleton project for Swagger
