@@ -71,6 +71,7 @@ definitions:
       - source
       - word_count
       - word_count_message
+      - processed_lang
     properties:
       id:
         type: string
@@ -79,6 +80,8 @@ definitions:
       word_count:
         type: number
       word_count_message:
+        type: string
+      processed_lang:
         type: string
   NormalResponse:
     required:
