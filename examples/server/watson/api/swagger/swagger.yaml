@@ -60,7 +60,7 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse"
+            $ref: "#/definitions/ResponseErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
@@ -94,4 +94,16 @@ definitions:
       - message
     properties:
       message:
+        type: string
+  ResponseErrorResponse:
+    required:
+      - code
+      - help
+      - error
+    properties:
+      code:
+        type: number
+      help:
+        type: string
+      error:
         type: string
