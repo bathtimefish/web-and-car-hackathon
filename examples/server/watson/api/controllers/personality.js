@@ -45,7 +45,7 @@ function personality(req, res) {
     getProfile(content).then(function(data) {
         res.json(data);
     }).catch(function(err) {
-        res.json({'status': false});
+        res.status(400).json(err);
     });
 }
 
