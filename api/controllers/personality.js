@@ -50,6 +50,6 @@ function personality(req, res) {
 }
 
 function help(req, res) {
-    res.json({"name": "Watson Personality Insights API wrapper API", "version": "1.0.0"});
+    res.json({"name": "Watson Personality Insights API wrapper API", "version": "1.0.1"});
 }
 
