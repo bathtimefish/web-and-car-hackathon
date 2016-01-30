@@ -1,0 +1,21 @@
+{
+  "name": "examples",
+  "homepage": "https://github.com/bathtimefish/web-and-car-hackathon",
+  "authors": [
+    "bathtimefish <muraoka@bathtimefish.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.0"
+  }
+}
