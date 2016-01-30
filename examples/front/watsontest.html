@@ -116,7 +116,7 @@ Heading toward the 80th, the 90th and the centennial anniversary of the end of t
       <script>
         $('button#analyze').click(function() {
             /* watson config */
-            var url = 'http://localhost:10010/personality/insights';
+            var url = 'https://personality-insights.herokuapp.com/personality/insights';
             var content = $('textarea#text').val();
             var options = {
                 "type": "POST",
