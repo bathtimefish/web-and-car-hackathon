@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <style>
+        body {
+          display: block;
+          margin: 0px;
+          color: #1b9615;
+        }
+        /* マップコンテンツ */
+        .map {
+          position: fixed;
+          top: 0;
+          right: 0;
+          width: 100%;
+          height: 100%;
+          text-align: left;
+          font-size: 13px;
+          background: #2A408E;
+          z-index: 1;
+        }
+        /* マップコンテンツ */
+        .map .contents {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          font-size: 13px;
+          background: #f1eede;
+          -webkit-transition: all .5s ease;
+          transition: all .5s ease;
+          z-index: 2;
+        }
+        /* リザルトコンテンツ */
+        .result {
+          position: fixed;
+          top: 0;
+          right: 0;
+          width: 100%;
+          height: 100%;
+          text-align: left;
+          font-size: 13px;
+          background: #2A408E;
+          z-index: 3;
+        }
+        /* リザルトコンテンツ */
+        .result .contents {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          font-size: 13px;
+          background: #f1eede;
+          -webkit-transition: all .5s ease;
+          transition: all .5s ease;
+          z-index: 4;
+        }
+         /* ローディングコンテンツ */
+        .loading {
+          position: fixed;
+          top: 0;
+          right: 0;
+          width: 100%;
+          height: 100%;
+          text-align: left;
+          font-size: 13px;
+          background: #2A408E;
+          z-index: 5;
+        }
+        /* ローディングコンテンツ */
+        .loading .contents {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          font-size: 13px;
+          background: #f1eede;
+          -webkit-transition: all .5s ease;
+          transition: all .5s ease;
+          z-index: 6;
+        }
+        .loading .contents p
+        {
+            width: 60px; /*ローディングアイコンの横サイズ*/
+            height: 60px; /*ローディングアイコンの縦サイズ*/
+            border-radius: 50%;  /*CSS3で円を書く*/
+            border: 10px solid #1b9615;  /*円に○の白枠をつける*/
+            border-right-color: transparent; /*円の右にC状の空きをつける*/
+            text-align: center;
+            margin: 0 auto;
+            vertical-align: middle;
+            animation: spin 1s linear infinite; 
+            /* 1秒毎にくるくる回転するアニメーション*/
+        }
+        @keyframes spin
+        {
+          0% { transform: rotate(0deg);   opacity: 0.2; } /*0%の時は20％の透明度*/
+          50%  { transform: rotate(180deg); opacity: 1.0; } /*50%の時は透明度なし*/
+          100%   { transform: rotate(360deg); opacity: 0.2; } /*100%の時に20％の透明度に戻る*/
+        }
+        /* トップコンテンツ */
+        .top {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          text-align: center;
+          font-size: 13px;
+          background: #f1eede;
+          -webkit-transition: all .5s ease;
+          transition: all .5s ease;
+          z-index: 7;
+        }
+        /* メインコンテンツ内のスタイル ※デザインに併せて適当に */
+        .contents h1 {
+          margin-bottom: 30px;
+          font-size: 20px;
+        }
+        .contents {
+          width: 100%;
+          height: 100%;
+          padding: 150px 0;
+          background: #f1eede;
+          background-image: url("bg.png");
+        }
+        .contents p {
+          margin-bottom: 50px;
+        }
+        button.js__map,
+        button.js__analyze{
+        display: inline-block;
+        padding: 20px 20px;
+        border: solid 3px #1b9615;
+        border-radius: 3px;
+        color: #1b9615;
+        font-size: 20px;
+        background-color: #f1eede;
+        text-decoration: none;
+        font-weight: bold;
+        font-family: Helvetica, Arial, sans-serif;
+        }
+        /* オープン */
+        .analyze-open .top{
+          -webkit-transform: translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0);
+        }
+        .analyze-open.map-open .result{
+          -webkit-transform: translate3d(-100%, 0, 0);
+          transform: translate3d(-100%, 0, 0);
+        }
+      </style>
+    </head>
+      
+    <body>
+
+      <!-- リザルトコンテンツ -->
+      <div class="map">
+        <div class="contents">
+          <section class="contents__inner">
+            <h1>map</h1>
+          </section>
+        </div>
+      </div>
+
+      <!-- リザルトコンテンツ -->
+      <div class="result">
+        <div class="contents">
+          <section class="contents__inner">
+            <h1>インフォ</h1>
+            <button id="map" class="js__map">MAP</button><br>
+          </section>
+        </div>
+      </div>
+
+      <!-- ローディングコンテンツ -->
+      <div class="loading">
+        <div class="contents">
+          <section class="contents__inner">
+            <h1>解析中</h1>
+            <p></p>
+          </section>
+        </div>
+      </div>
+
+      <!-- トップコンテンツ -->
+      <div class="top">
+        <div class="contents">
+          <section class="contents__inner">
+            <h1><img src="logo.png" width="350" alt=""></h1>
+            <button id="analyze" class="js__analyze">Analyze</button><br>
+          </section>
+        </div>
+      </div>
+
+      <!-- vehicle api 必須 : ここから-->
+      <script src="http://52.193.125.145:3000/socket.io/socket.io.js"></script> 
+      <script src="http://52.193.125.145:3000/www/js/vehicleAPI.js"></script>
+      <script src="http://52.193.125.145:3000/www/js/vehicleAPI-client.js"></script>
+      <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+      <script src="https://raw.githubusercontent.com/carlo/jquery-base64/master/jquery.base64.min.js"></script>
+      <script>
+        var roomID = "hogehogehoge"; //ユニークな文字列に変更して下さい
+        window.onload = function () {
+          document.getElementById("WSRoomID").innerHTML = roomID;
+          var msg = {"roomID":roomID, "data":"NOT REQUIRED"};
+          socket.emit('joinRoom', JSON.stringify(msg));        
+        }
+      </script>
+      <!-- vehicle api 必須 : ここまで -->
+      <script>
+        var vehicleSpeedSub = navigator.vehicle.vehicleSpeed.subscribe(function(vehicleSpeed) {
+          console.log("vehicle speed changed to: " + vehicleSpeed.speed);
+          document.getElementById("VehicleSpeed").innerHTML = Math.floor(vehicleSpeed.speed /1000);
+        });
+
+        var brakeOperationSub = navigator.vehicle.brakeOperation.subscribe(function(brakeOperation) {
+          console.log("brakeOperation changed to: " + brakeOperation.brakePedalDepressed);
+          document.getElementById("BrakeOperation").innerHTML = brakeOperation.brakePedalDepressed;
+        });
+      </script>
+      <script>
+        $('button#analyze').click(function() {
+            /* watson config */
+            var url = 'https://personality-insights.herokuapp.com/personality/insights';
+            var content = $('textarea#text').val();
+            var options = {
+                "type": "POST",
+                "dataType": 'json',
+                "url": url,
+                "data": {
+                    "text": content
+                }
+            };
+            $.ajax(options).done(function(data) {
+                console.log(data);
+                $('textarea#result').val(JSON.stringify(data));
+            }).fail(function(err) {
+                console.error(err);
+                $('textarea#result').val(JSON.stringify(err));
+            });
+        });
+      </script>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script>
+      $(function () {
+        var $body = $('body');
+        $('.js__analyze').on('click', function () {
+          $body.toggleClass('analyze-open');
+          setTimeout('stopload()',2000);
+        });
+      });
+      function stopload(){
+        $('.result').css('display','block');
+        $('.loading').delay(900).fadeOut(800);
+      }
+      $(function () {
+        var $body = $('body');
+        $('.js__map').on('click', function () {
+          $body.toggleClass('map-open')
+        });
+      });
+      </script>
+    </body>
+</html>
