@@ -151,17 +151,32 @@
         /* マップサイズ */
         @media (max-width: 799px){
             .map_size {
-                width: 90%;
+                width: 60%;
                 height: 225px;
                 margin: auto;
             }
         }
         @media (min-width: 800px){
             .map_size {
-                width: 90%;
+                width: 60%;
                 height: 700px;
                 margin: auto;
             }
+        }
+        .left_area{
+            width: 40%;
+            float:left;text-align: center;
+        }
+        .text_area{
+            width: 95%;
+            margin: 40% auto;
+            padding: 2% 0;
+            text-align: left;
+
+        }
+        .highlighte_char{
+            font-size: 1.5em;
+            font-weight: bold;
         }
       </style>
     </head>
@@ -171,8 +186,16 @@
       <!-- リザルトコンテンツ -->
       <div class="map">
         <div class="contents" style="padding:20px 0;">
-          <section class="contents__inner">
-            <div id="map_canvas" class="map_size" onload="getRoute()"></div>
+          <section class="contents__inner" style="width: 95%; margin:0 auto;">
+            <div id="map_canvas" class="map_size" onload="getRoute()" style="float: left;"></div>
+            <div class="left_area" >
+                <div class="text_area">
+                    <span class="highlighte_char">例：移動ルートを提案してくれる</span>
+                    <br/>
+                    
+                </div>
+            </div>
+            <div style="clear: left;"></div>
           </section>
         </div>
       </div>
