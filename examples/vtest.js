@@ -28,11 +28,13 @@ var arc = d3.svg.arc()
 var datas = [
     'data/data1.json',
     'data/data2.json',
-    'data/data4.json',
     'data/data3.json',
-    'data/data5.json',
     'data/data6.json',
     'data/data7.json',
+
+    'data/data4.json',
+
+    'data/data5.json',
     'data/data8.json',
     'data/data9.json'
 ];
