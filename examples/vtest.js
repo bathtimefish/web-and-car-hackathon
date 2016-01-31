@@ -50,6 +50,17 @@ setInterval(function() {
     d3.json(datas[data_count], function(error, root) {
 
 
+
+
+    if (data_count > 0) {
+
+        d3.selectAll("g")    // table要素を選択
+            .data(text) // 対象になるデータ
+            .exit() // 要素数がリスト数より多い場合は以下の処理を実行
+            .remove();  // 要素を削除する
+    }
+
+
       console.log(datas[data_count]);
       // if (data_count === 0) {
         g = svg.selectAll("g")
@@ -133,7 +144,7 @@ setInterval(function() {
 
 
 
-}, 8000);
+}, 4000);
 
 // Interpolate the scales!
 function arcTween(d) {
