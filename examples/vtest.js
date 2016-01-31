@@ -144,7 +144,7 @@ setInterval(function() {
 
 
 
-}, 4000);
+}, 5000);
 
 // Interpolate the scales!
 function arcTween(d) {
