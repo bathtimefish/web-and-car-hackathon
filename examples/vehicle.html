@@ -5,10 +5,16 @@
         <style>
 
         div#log {
-            width: 30%;
-            height: 400px;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 400px;
+            height: 800px;
             border: solid 1px #ddd;
             overflow: scroll;
+            background-color: #000;
+            opacity: 0.5;
+            color: #fff;
         }
 
         path {
@@ -24,7 +30,6 @@
         </style>
     </head>
     <body>
-        <div>RoomID: <span id="room-id"></span></div>
         <div id="log"></div>
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <script src="vtest.js"></script>

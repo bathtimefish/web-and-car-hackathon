@@ -44,10 +44,10 @@ var text = null;
 var path = null;
 
 setInterval(function() {
-  
+
     d3.json(datas[data_count], function(error, root) {
 
-    
+
       console.log(datas[data_count]);
       // if (data_count === 0) {
         g = svg.selectAll("g")
@@ -66,7 +66,7 @@ setInterval(function() {
           .attr("dy", ".35em") // vertical-align
           .text(function(d) { return d.name; });
 
-        data_count++;
+        //data_count++;
 
         function click(d) {
           // fade out all text elements
@@ -100,7 +100,7 @@ setInterval(function() {
 
       // // var d = mainRoot;
       // var d = root.tree;
-      
+
 
       //   // text.transition().attr("opacity", 0);
 
@@ -124,14 +124,14 @@ setInterval(function() {
       data_count++;
       if(data_count > datas.length-1) data_count = 0;
     });
-    
-    
+
+
     d3.select(self.frameElement).style("height", height + "px");
 
-    
-    
 
-}, 2000);
+
+
+}, 8000);
 
 // Interpolate the scales!
 function arcTween(d) {
