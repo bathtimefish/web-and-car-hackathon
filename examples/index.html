@@ -159,7 +159,7 @@
         @media (min-width: 800px){
             .map_size {
                 width: 90%;
-                height: 450px;
+                height: 700px;
                 margin: auto;
             }
         }
@@ -170,9 +170,8 @@
 
       <!-- リザルトコンテンツ -->
       <div class="map">
-        <div class="contents">
+        <div class="contents" style="padding:20px 0;">
           <section class="contents__inner">
-              <div style="margin:0 auto 5px; font-size: 20px; font-weight:bold;">map</h1>
             <div id="map_canvas" class="map_size" onload="getRoute()"></div>
           </section>
         </div>
@@ -302,10 +301,11 @@
           function mapInit() {
               //渋谷駅の座標
               var option = {
-                  zoom : 15,
+                  zoom : 10,
                   mapTypeId : google.maps.MapTypeId.ROADMAP,
                   searchControl : true,
                   disableDefaultUI : 'disable',
+                  disableDoubleClickZoom : 'disable',
               };
               //マップ描画
               map = new google.maps.Map(mapdiv, option);
