@@ -68,7 +68,7 @@ setInterval(function() {
           .attr("dy", ".35em") // vertical-align
           .text(function(d) { return d.name; });
 
-        data_count++;
+        // data_count++;
 
         function click(d) {
           // fade out all text elements
