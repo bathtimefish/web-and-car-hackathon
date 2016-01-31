@@ -42,6 +42,7 @@ var mainRoot = null;
 var g = null;
 var text = null;
 var path = null;
+
 setInterval(function() {
   
     d3.json(datas[data_count], function(error, root) {
@@ -130,7 +131,7 @@ setInterval(function() {
     
     
 
-}, 3000);
+}, 2000);
 
 // Interpolate the scales!
 function arcTween(d) {
