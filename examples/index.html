@@ -151,15 +151,15 @@
         /* マップサイズ */
         @media (max-width: 799px){
             .map_size {
-                width: 400px;
-                height: 250px;
+                width: 90%;
+                height: 225px;
                 margin: auto;
             }
         }
         @media (min-width: 800px){
             .map_size {
-                width: 800px;
-                height: 500px;
+                width: 90%;
+                height: 450px;
                 margin: auto;
             }
         }
@@ -172,7 +172,7 @@
       <div class="map">
         <div class="contents">
           <section class="contents__inner">
-              <h1>map</h1>
+              <div style="margin:0 auto 5px; font-size: 20px; font-weight:bold;">map</h1>
             <div id="map_canvas" class="map_size" onload="getRoute()"></div>
           </section>
         </div>
@@ -290,7 +290,7 @@
           var isSetRoute;
           var howToMove = 'driving';
           var start = '渋谷駅';
-          var end = '東京駅';
+          var end = '雷門';
           //case2:インターバルでルート切り替え
           setInterval(function(){
               if(howToMove == 'driving') howToMove = 'walking';
@@ -311,15 +311,77 @@
               map = new google.maps.Map(mapdiv, option);
               //マップのスタイル設定
               var mapStyle = [
-                  {
-                      "stylers": [
-                        { "hue": "#8800ff" },
-                        { "lightness": -3 },
-                        { "saturation": -87 },
-                        { "gamma": 3.05 }
-                      ]
-                  }
-              ];
+                {
+                    "featureType": "landscape",
+                    "stylers": [
+                        {"saturation": -100},
+                        {"lightness": 65},
+                        {"visibility": "on"}
+                    ]
+                },
+                {
+                    "featureType": "poi",
+                    "stylers": [
+                        {"saturation": -100},
+                        {"lightness": 51},
+                        {"visibility": "simplified"}
+                    ]
+                },
+                {
+                    "featureType": "road.highway",
+                    "stylers": [
+                        {"saturation": -100},
+                        {"visibility": "simplified"}
+                    ]
+                },
+                {
+                    "featureType": "road.arterial",
+                    "stylers": [
+                        {"saturation": -100},
+                        {"lightness": 30},
+                        {"visibility": "on"}
+                    ]
+                },
+                {
+                    "featureType": "road.local",
+                    "stylers": [
+                        {"saturation": -100},
+                        {"lightness": 40},
+                        {"visibility": "on"}
+                    ]
+                },
+                {
+                    "featureType": "transit",
+                    "stylers": [
+                        {"saturation": -100},
+                        {"visibility": "simplified"}
+                    ]
+                },
+                {
+                    "featureType": "administrative.province",
+                    "stylers": [
+                        {"visibility": "off"}
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "labels",
+                    "stylers": [
+                        {"visibility": "on"},
+                        {"lightness": -25},
+                        {"saturation": -100}
+                    ]
+                },
+                {
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [
+                        {"hue": "#ffff00"},
+                        {"lightness": -25},
+                        {"saturation": -97}
+                    ]
+                }
+            ];
               var mapType = new google.maps.StyledMapType(mapStyle);
               map.mapTypes.set('simple', mapType);
               map.setMapTypeId('simple');
