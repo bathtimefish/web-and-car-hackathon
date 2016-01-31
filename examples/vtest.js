@@ -28,7 +28,13 @@ var arc = d3.svg.arc()
 var datas = [
     'data/data1.json',
     'data/data2.json',
-    'data/data3.json'
+    'data/data4.json',
+    'data/data3.json',
+    'data/data5.json',
+    'data/data6.json',
+    'data/data7.json',
+    'data/data8.json',
+    'data/data9.json'
 ];
 
 var data_count = 0;
@@ -83,8 +89,8 @@ setInterval(function() {
         }
       if (data_count > 0) {
         // g.exit().remove();
-        path.exit().remove();
-        text.exit().remove();
+        // path.exit().remove();
+        // text.exit().remove();
 
       //   svg.selectAll("g")
       //   .data(partition.nodes(root.tree))
