@@ -90,7 +90,7 @@
             text-align: center;
             margin: 0 auto;
             vertical-align: middle;
-            animation: spin 1s linear infinite; 
+            animation: spin 1s linear infinite;
             /* 1秒毎にくるくる回転するアニメーション*/
         }
         @keyframes spin
@@ -148,16 +148,32 @@
           -webkit-transform: translate3d(-100%, 0, 0);
           transform: translate3d(-100%, 0, 0);
         }
+        /* マップサイズ */
+        @media (max-width: 799px){
+            .map_size {
+                width: 400px;
+                height: 250px;
+                margin: auto;
+            }
+        }
+        @media (min-width: 800px){
+            .map_size {
+                width: 800px;
+                height: 500px;
+                margin: auto;
+            }
+        }
       </style>
     </head>
-      
+
     <body>
 
       <!-- リザルトコンテンツ -->
       <div class="map">
         <div class="contents">
           <section class="contents__inner">
-            <h1>map</h1>
+              <h1>map</h1>
+            <div id="map_canvas" class="map_size" onload="getRoute()"></div>
           </section>
         </div>
       </div>
@@ -193,7 +209,7 @@
       </div>
 
       <!-- vehicle api 必須 : ここから-->
-      <script src="http://52.193.125.145:3000/socket.io/socket.io.js"></script> 
+      <script src="http://52.193.125.145:3000/socket.io/socket.io.js"></script>
       <script src="http://52.193.125.145:3000/www/js/vehicleAPI.js"></script>
       <script src="http://52.193.125.145:3000/www/js/vehicleAPI-client.js"></script>
       <script src="./bower_components/jquery/dist/jquery.min.js"></script>
@@ -203,7 +219,7 @@
         window.onload = function () {
           document.getElementById("WSRoomID").innerHTML = roomID;
           var msg = {"roomID":roomID, "data":"NOT REQUIRED"};
-          socket.emit('joinRoom', JSON.stringify(msg));        
+          socket.emit('joinRoom', JSON.stringify(msg));
         }
       </script>
       <!-- vehicle api 必須 : ここまで -->
@@ -260,5 +276,93 @@
         });
       });
       </script>
+
+      <!-- Google MapサンプルのJSここから -->
+      <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCtJ5DGO_cn_lo85NvMR8B_ZweKBchypAs&libraries=places"></script>
+      <script>
+          var set=0;
+          var mapdiv = document.getElementById('map_canvas');
+          var directionsService = new google.maps.DirectionsService();
+          var directionsDisplay;
+          var map;
+          var latlng;
+          var centerPosition;
+          var isSetRoute;
+          var howToMove = 'driving';
+          var start = '渋谷駅';
+          var end = '東京駅';
+          //case2:インターバルでルート切り替え
+          setInterval(function(){
+              if(howToMove == 'driving') howToMove = 'walking';
+              else howToMove = 'driving';
+              toRemove();
+              getRoute();
+          }, 2300);
+
+          function mapInit() {
+              //渋谷駅の座標
+              var option = {
+                  zoom : 15,
+                  mapTypeId : google.maps.MapTypeId.ROADMAP,
+                  searchControl : true,
+                  disableDefaultUI : 'disable',
+              };
+              //マップ描画
+              map = new google.maps.Map(mapdiv, option);
+              //マップのスタイル設定
+              var mapStyle = [
+                  {
+                      "stylers": [
+                        { "hue": "#8800ff" },
+                        { "lightness": -3 },
+                        { "saturation": -87 },
+                        { "gamma": 3.05 }
+                      ]
+                  }
+              ];
+              var mapType = new google.maps.StyledMapType(mapStyle);
+              map.mapTypes.set('simple', mapType);
+              map.setMapTypeId('simple');
+              mapTypeControlOptions: {
+                 mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'simple']
+              }
+              map.setMapTypeId('simple');
+          }
+          mapInit();
+          //ルート描画用
+          function getRoute(){
+                //東京駅の座標
+              latlng = new google.maps.LatLng(35.681382, 139.766084 );
+              if(howToMove == 'driving') travelMode = google.maps.DirectionsTravelMode.DRIVING;
+              else if(howToMove == 'walking') travelMode = google.maps.DirectionsTravelMode.WALKING;
+              var request = {
+                  origin: start, //入力地点の緯度、経度
+                  destination: end, //到着地点の緯度、経度
+                  travelMode: travelMode //ルートの種類
+              }
+              directionsService.route(request,function(result, status){
+                  //取れたルートをセット
+                  isSetRoute = true;
+                  toRender(result);
+              });
+          }
+          //ルートクリア
+          function toRemove(){
+                //routeがセットされていれば削除する。
+                if(isSetRoute){
+                    currentDirections=null;
+                    directionsDisplay.setMap(null);
+                    renderFLG=false;
+                    isSetRoute = false;
+                }
+          }
+          //マップを描画する
+          function toRender(result){
+                directionsDisplay = new google.maps.DirectionsRenderer();
+                directionsDisplay.setDirections(result); //取得した情報をset
+                directionsDisplay.setMap(map); //マップに描画
+          }
+      </script>
+      <!-- Google MapサンプルのJSここまで -->
     </body>
 </html>
